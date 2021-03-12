@@ -1,13 +1,11 @@
 import cors from 'cors';
 import express, { Express } from 'express';
-
 import 'dotenv/config';
 import './database';
 import http from 'http';
 import jwt from 'jsonwebtoken';
 import path from 'path';
 import io from 'socket.io';
-import { ThisMonthInstance } from 'twilio/lib/rest/api/v2010/account/usage/record/thisMonth';
 
 import authConfig from './config/auth';
 import routes from './routes';

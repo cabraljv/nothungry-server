@@ -3,6 +3,7 @@ import { getRepository } from 'typeorm';
 import * as Yup from 'yup';
 
 import Product from '../models/Product';
+import imageUpload from '../services/Upload';
 
 class ProductControler {
   async index(req: Request, res: Response) {
@@ -89,6 +90,7 @@ class ProductControler {
 
     const productRepo = getRepository(Product);
     const { name, description, price, type } = req.body;
+    const imageUrl = await imageUpload(req.file);
     try {
       const product = productRepo.create({
         name,
@@ -96,7 +98,7 @@ class ProductControler {
         price,
         type,
         restaurant: req.userId,
-        img_path: `${process.env.APP_URL}/files/${req.file.filename}`,
+        img_path: `${imageUrl}`,
       });
       await productRepo.save(product);
     } catch (error) {

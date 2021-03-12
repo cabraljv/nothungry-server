@@ -1,7 +1,6 @@
 import { Router } from 'express';
 import Multer from 'multer';
 
-import uploadConfig from './config/upload';
 import DashboardController from './controllers/DashboardController';
 import OrderAcceptController from './controllers/OrderAcceptController';
 import OrderController from './controllers/OrderController';
@@ -13,7 +12,12 @@ import SessionController from './controllers/SessionController';
 import WhatsappMessageController from './controllers/WhatsappMessageController';
 import auth from './middlewares/auth';
 
-const uploads = Multer(uploadConfig);
+const uploads = Multer({
+  storage: Multer.memoryStorage(),
+  limits: {
+    fileSize: 5 * 1024 * 1024,
+  },
+});
 const routes = Router();
 
 routes.get('/', (req, res) => res.send('Server ok'));

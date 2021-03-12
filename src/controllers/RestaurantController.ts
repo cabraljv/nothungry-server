@@ -4,6 +4,7 @@ import { getRepository } from 'typeorm';
 import * as Yup from 'yup';
 
 import Restaurant from '../models/Restaurant';
+import uploadFile from '../services/Upload';
 
 class RestaurantController {
   async store(req: Request, res: Response) {
@@ -19,12 +20,14 @@ class RestaurantController {
     }
     const { name, phone, password, url, whatsapp_number } = req.body;
     const restaurantRepo = getRepository(Restaurant);
+    const imageUrl = await uploadFile(req.file);
+
     const restaurant = restaurantRepo.create({
       name,
       phone,
       url,
       whatsapp_number,
-      img_path: `${process.env.APP_URL}/files/${req.file.filename}`,
+      img_path: `${imageUrl}`,
       password: await bcrypt.hash(password, 8),
     });
 
