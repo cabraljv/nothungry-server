@@ -15,6 +15,6 @@ RUN yarn
 COPY --chown=node:node . .
 RUN chmod +x /home/node/app/init.sh
 
-EXPOSE 3333 
+EXPOSE 8080 
  
 ENTRYPOINT [ "./init.sh" ] 
