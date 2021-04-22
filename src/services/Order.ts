@@ -1,7 +1,6 @@
 import { getRepository } from 'typeorm';
 
 import Order from '../models/Order';
-import User from '../models/User';
 
 interface IResponse {
   status: number;
@@ -14,15 +13,9 @@ export async function createOrder(
   rest_id: string,
 ): Promise<IResponse> {
   const orderRepo = getRepository(Order);
-  const userRepo = getRepository(User);
 
   try {
-    const user = await userRepo.findOne({ where: { whatsapp: user_whatsapp } });
-
-    const order = orderRepo.create({
-      restaurant: rest_id,
-      user,
-    });
+    const order = orderRepo.create();
 
     await orderRepo.save(order);
     return { status: 201, order: order.id };

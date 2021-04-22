@@ -1,5 +1,6 @@
 import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
+import Additions from './Additions';
 import Order from './Order';
 import Product from './Product';
 
@@ -37,6 +38,9 @@ class Restaurant {
 
   @OneToMany(() => Product, product => product.restaurant)
   products!: Product[];
+
+  @OneToMany(() => Additions, addition => addition.restaurant)
+  additions!: Additions[];
 
   @OneToMany(() => Order, order => order.restaurant)
   orders!: Order[];

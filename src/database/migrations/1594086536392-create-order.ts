@@ -48,11 +48,6 @@ export class createOrder1594086536392 implements MigrationInterface {
         isNullable: true,
       },
       {
-        name: 'user_id',
-        type: 'uuid',
-        isNullable: false,
-      },
-      {
         name: 'accepted',
         type: 'boolean',
         isNullable: false,
@@ -109,17 +104,9 @@ export class createOrder1594086536392 implements MigrationInterface {
     referencedColumnNames: ['id'],
   });
 
-  private user_fk = new TableForeignKey({
-    columnNames: ['user_id'],
-    referencedTableName: 'users',
-    onDelete: '',
-    referencedColumnNames: ['id'],
-  });
-
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(this.table);
     await queryRunner.createForeignKey(this.table, this.restaurant_fk);
-    await queryRunner.createForeignKey(this.table, this.user_fk);
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {

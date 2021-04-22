@@ -1,8 +1,13 @@
-import { MigrationInterface, QueryRunner, Table } from 'typeorm';
+import {
+  MigrationInterface,
+  QueryRunner,
+  Table,
+  TableForeignKey,
+} from 'typeorm';
 
-export class createUser1594086536390 implements MigrationInterface {
+export class createAdditions1615933779347 implements MigrationInterface {
   private table = new Table({
-    name: 'users',
+    name: 'additions',
     columns: [
       {
         name: 'id',
@@ -13,15 +18,19 @@ export class createUser1594086536390 implements MigrationInterface {
         type: 'uuid',
       },
       {
-        name: 'whatsapp',
+        name: 'description',
         type: 'varchar',
-        length: '50',
+        length: '100',
         isNullable: false,
       },
       {
-        name: 'name',
-        type: 'varchar',
-        length: '50',
+        name: 'price',
+        type: 'float',
+        isNullable: false,
+      },
+      {
+        name: 'restaurant_id',
+        type: 'uuid',
         isNullable: false,
       },
       {
@@ -39,8 +48,16 @@ export class createUser1594086536390 implements MigrationInterface {
     ],
   });
 
+  private restaurant_fk = new TableForeignKey({
+    columnNames: ['restaurant_id'],
+    referencedTableName: 'restaurants',
+    onDelete: 'CASCADE',
+    referencedColumnNames: ['id'],
+  });
+
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(this.table);
+    await queryRunner.createForeignKey(this.table, this.restaurant_fk);
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {

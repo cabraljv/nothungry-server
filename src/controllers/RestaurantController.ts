@@ -42,12 +42,16 @@ class RestaurantController {
       .createQueryBuilder('restaurant')
       .where({ url: req.params.id })
       .leftJoinAndSelect('restaurant.products', 'products')
+      .leftJoinAndSelect('restaurant.additions', 'additions')
       .select([
         'products.id',
         'products.name',
         'products.description',
         'products.price',
         'products.img_path',
+        'additions.id',
+        'additions.price',
+        'additions.description',
         'products.type',
         'restaurant.img_path',
         'restaurant.name',

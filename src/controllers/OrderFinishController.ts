@@ -2,7 +2,6 @@ import { Request, Response } from 'express';
 import { getRepository } from 'typeorm';
 
 import Order from '../models/Order';
-import { sendMessage } from '../services/WhatsApp';
 
 class OrderFinishController {
   async store(req: Request, res: Response) {
@@ -22,11 +21,6 @@ class OrderFinishController {
       }
       order.concluided = true;
       orderRepo.save(order);
-      sendMessage(
-        order.restaurant.whatsapp_number,
-        order.user.whatsapp,
-        'Seu pedido foi concluído!',
-      );
 
       return res.json({ response: 'Order successfull finished' });
     }

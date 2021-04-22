@@ -13,7 +13,9 @@
     "dev": "ts-node-dev --respawn --transpileOnly src/server.ts",
     "typeorm:cli": "ts-node ./node_modules/typeorm/cli -f ./src/config/database.ts",
     "dev:server": "ts-node-dev --no-notify --inspect --transpileOnly --ignore-watch --no-notify node_modules src/server.ts",
-    "start": "ts-node --project ./tsconfig.json src/server.ts"
+    "start": "ts-node --project ./tsconfig.json src/server.ts",
+    "deploy": "gcloud app deploy --project nothungry",
+    "postdeploy": "gcloud app deploy dispatch.yaml --project nothungry"
   },
   "dependencies": {
     "@google-cloud/storage": "^5.8.1",

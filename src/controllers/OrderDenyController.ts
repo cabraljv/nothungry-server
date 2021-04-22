@@ -2,7 +2,6 @@ import { Request, Response } from 'express';
 import { getRepository } from 'typeorm';
 
 import Order from '../models/Order';
-import { sendMessage } from '../services/WhatsApp';
 
 class OrderDenyController {
   async store(req: Request, res: Response) {
@@ -10,7 +9,7 @@ class OrderDenyController {
     const orderRepo = getRepository(Order);
 
     const order = await orderRepo.findOne(orderId, {
-      relations: ['restaurant', 'user'],
+      relations: ['restaurant'],
     });
     if (!order) {
       return res.status(404).json({ error: 'Order does not exists' });
@@ -22,11 +21,6 @@ class OrderDenyController {
       }
       order.denied = true;
       orderRepo.save(order);
-      sendMessage(
-        order.restaurant.whatsapp_number,
-        order.user.whatsapp,
-        'Seu pedido foi aceito pelo restaurante!',
-      );
     }
     return res.json({ response: 'Order successfull denied' });
   }

@@ -7,6 +7,7 @@ const config: ConnectionOptions = {
   username: process.env.DB_USER,
   synchronize: false,
   password: process.env.DB_PASS,
+  logging: true,
   database: process.env.DB_NAME,
   entities: ['./src/models/*.ts'],
   migrations: ['./src/database/migrations/*.ts'],

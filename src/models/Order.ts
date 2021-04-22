@@ -4,13 +4,11 @@ import {
   PrimaryGeneratedColumn,
   JoinColumn,
   ManyToOne,
-  ManyToMany,
-  JoinTable,
+  OneToMany,
 } from 'typeorm';
 
-import Product from './Product';
+import ProductOrder from './ProductOrder';
 import Restaurant from './Restaurant';
-import User from './User';
 
 @Entity({ name: 'orders' })
 class Order {
@@ -51,19 +49,14 @@ class Order {
   @JoinColumn({ name: 'restaurant_id' })
   public restaurant!: Restaurant | string;
 
-  @ManyToOne(() => User, user => user.orders)
-  @JoinColumn({ name: 'user_id' })
-  public user: User;
-
   @Column()
   public created_at: Date;
 
   @Column()
   public updated_at: Date;
 
-  @ManyToMany(() => Product)
-  @JoinTable()
-  public products: Product[];
+  @OneToMany(() => ProductOrder, po => po.order)
+  public products: ProductOrder[];
 }
 
 export default Order;
